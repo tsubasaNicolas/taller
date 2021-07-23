@@ -11,11 +11,8 @@ const { Item } = Form;
 
 const Login = () => {
 
-  
-
   const [user, setUser] = useState(null);
   const [password, setPassword] = useState(null);
-
 
   const formSuccess = (datos) => {
     console.log("Formulario enviado exitosamente", datos);

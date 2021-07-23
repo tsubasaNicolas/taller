@@ -31,7 +31,7 @@ const jsPdfGenerator = ()=> {
     doc.text(`Tipo: ${tipo} ` , 10, 60);
     doc.text(`Año: ${year} ` , 10, 70);
     
-doc.save("SeguroAutomotriz.pdf");
+    doc.save("SeguroAutomotriz.pdf");
 
 }
     return (

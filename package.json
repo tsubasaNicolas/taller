@@ -15,7 +15,7 @@
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
   },
-  "homepage": "https://tsubasanicolas.github.io/taller/",
+ 
   "scripts": {
     "predeploy":"npm run build",
     "deploy":"gh-pages -d build",

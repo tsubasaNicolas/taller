@@ -3,10 +3,7 @@ import React from 'react'
 const NotFoundPage = () => {
     return (
         <div>
-            Página no encontrada- la pagina habilitada state = {
-               'www.gdspruebas.esy.es/taller/formulario'
-            }
-            
+            Página no encontrada
         </div>
     )
 }

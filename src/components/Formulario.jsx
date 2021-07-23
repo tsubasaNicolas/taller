@@ -10,8 +10,6 @@ import { useHistory } from "react-router-dom";
 import useAuth from '../auth/useAuth'
 
 
-
-
 const { Text, Paragraph } = Typography;
 
 const { Item } = Form;
@@ -153,7 +151,6 @@ const Formulario = () => {
             <Item label="Tipo de vehículo" name="tipos">
               <Select autoFocus
                 onChange={onChangeTipoVehiculo} 
-              
                >
          
                 <Option value="Tipo 1">Tipo 1</Option>

@@ -49,14 +49,13 @@ const AppRouter = () => {
                 </li>
               </>
             )}
-            {auth.isLogged() && <button onClick={auth.logout}>logout</button>}
           </ul>
         </nav> */}
 
         <Switch>
           <PrivateRoute exact path="/formulario" component={Formulario} />
 
-          <PublicRoute path="/login" component={Login} />
+          <PublicRoute exact path="/login" component={Login} />
 
           <Route exact path="/" component={Home} />
           <Route exact path="/resumen" component={Resumen} />
