@@ -25,10 +25,10 @@ const AppRouter = () => {
         extra={
           auth.isLogged() && (
             <Button
-              style={{ background: "indianred", color: "white" }}
+              style={{ background: "lightseagreen", color: "white" }}
               onClick={auth.logout}
             >
-              logout
+              Salir
             </Button>
           )
         }
@@ -68,8 +68,8 @@ const AppRouter = () => {
           <PublicRoute exact path="/login" component={Login} />
 
           <Route exact path="/" component={Home} />
-          <Route exact path="/resumen" component={Resumen} />
-          <Route exact path="/final" component={Final} />
+          <PrivateRoute exact path="/resumen" component={Resumen} />
+          <PrivateRoute exact path="/final" component={Final} />
 
           <Route path="*" component={NotFoundPage} />
         </Switch>

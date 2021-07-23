@@ -3,13 +3,13 @@ import useInfo from "../info/useInfo";
 import useAuth from '../auth/useAuth'
 import {Typography, Button } from "antd";
 import { useHistory } from "react-router-dom";
+import '../App.css'
 
 
 const { Text, Paragraph } = Typography;
 const Resumen = () => {
     const auth = useAuth()
-  const usuario =  auth.user 
-
+    const usuario =  auth.user 
     const info = useInfo()
     const color  = info.color
     const tipo  = info.tipo
@@ -32,10 +32,11 @@ const Resumen = () => {
               <Paragraph>{`Tipo: ${tipo}`}</Paragraph>
 
               <Button
-                type="success"
+               // type="success"
                size='large'
-               style={{background:'royalblue'}}
-                onClick={() => { history.push({pathname:"/final"}) 
+               style={{background:'lightseagreen', color:'white'}}
+               //className="btnConfirmar" 
+               onClick={() => { history.push({pathname:"/final"}) 
                 
                 }}
               >

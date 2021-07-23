@@ -40,8 +40,8 @@ const jsPdfGenerator = ()=> {
            <Button 
             onClick={()=>jsPdfGenerator()}
             icon={<ArrowDownOutlined />}
-            style={{marginTop:20, background:'goldenrod', color:'white'}}>Descargar Comprobante PDF</Button>
-    
+            style={{marginTop:20, background:'lightseagreen', color:'white'}}>Descargar Comprobante PDF</Button>
+  
         </div>
     )
 }
