@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import useAuth from "../auth/useAuth";
 import Formulario from "../components/Formulario";
 import Home from "../components/Home";
@@ -34,7 +34,7 @@ const AppRouter = () => {
         }
       ></Card>
       <div>
-        {/* <nav>
+        <nav>
           <ul>
             {!auth.isLogged() && (
               <>
@@ -50,7 +50,7 @@ const AppRouter = () => {
               </>
             )}
           </ul>
-        </nav> */}
+        </nav>
 
         <Switch>
           <PrivateRoute exact path="/formulario" component={Formulario} />
