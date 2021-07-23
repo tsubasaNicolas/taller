@@ -34,7 +34,7 @@ const AppRouter = () => {
         }
       ></Card>
       <div>
-        <nav>
+        {/* <nav>
           <ul>
             {!auth.isLogged() && (
               <>
@@ -50,7 +50,17 @@ const AppRouter = () => {
               </>
             )}
           </ul>
-        </nav>
+        </nav> */}
+
+        {!auth.isLogged() && (
+          <div style={{ display: "none" }}>
+            <Link to="/">Home</Link>
+
+            <Link to="/login">login</Link>
+
+            <Link to="/formulario">formulario</Link>
+          </div>
+        )}
 
         <Switch>
           <PrivateRoute exact path="/formulario" component={Formulario} />
