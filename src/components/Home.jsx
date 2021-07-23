@@ -1,0 +1,14 @@
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+const Home = () => {
+    return (
+        <div>
+          Favor
+             <Link to="/formulario"> {" "} Acceder {" "}</Link>
+             al formulario
+        </div>
+    )
+}
+
+export default Home

@@ -1,10 +1,16 @@
 import "./App.css";
-import Formulario from "./components/Formulario";
+import AuthProvider from "./auth/AuthProvider";
+import InfoProvider from "./info/InfoProvider";
+import AppRouter from "./routers/AppRouter";
 
 function App() {
   return (
     <div className="App">
-      <Formulario />
+      <AuthProvider>
+        <InfoProvider>
+          <AppRouter />
+        </InfoProvider>
+      </AuthProvider>
     </div>
   );
 }

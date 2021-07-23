@@ -26,25 +26,18 @@ function addWeekdays(date3, days) {
   return date3;
 }
 
-
-
-
 var fechaIngreso=  moment()
 var fechaRetiro=  addWeekdays(fechaIngreso, 7)
 
-const Prueba1 = () => {
+const Fechas = () => {
   const [date, setDate] = useState(fechaIngreso);
   const [date2, setDate2] = useState(fechaRetiro);
  // const [bloqueoDias, setBloqueoDias]= useState()
 
- 
 function disabledDate2(current) {
-    // No puede seleccionar fecha anterior a hoy
-    
+    // No puede seleccionar fecha anterior a hoy  
     return current < addWeekdays(date, 7) || moment(current).day() === 0  || moment(current).day() === 6
   }
-  
-
   useEffect(() => {
   if(date){
     setDate(date)
@@ -146,4 +139,4 @@ useEffect(() => {
   );
 };
 
-export default Prueba1;
+export default Fechas;

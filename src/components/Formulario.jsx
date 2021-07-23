@@ -1,10 +1,18 @@
 
-import React from "react";
-import { Button, Form, Input, Row, Col, Select } from "antd";
+import React, {useState} from "react";
+import { Button, Form, Input, Row, Col, Select,Typography } from "antd";
 import "antd/dist/antd.css";
 import { createRef } from "react";
-import Prueba1 from "./Prueba1";
+import Fechas from "./Fechas";
 import UploadImages from "./UploadImages";
+import useInfo from "../info/useInfo";
+import { useHistory } from "react-router-dom";
+import useAuth from '../auth/useAuth'
+
+
+
+
+const { Text, Paragraph } = Typography;
 
 const { Item } = Form;
 
@@ -12,9 +20,43 @@ const { Option } = Select;
 
 const Formulario = () => {
     const formRef = createRef();
+    const auth = useAuth()
+    
+  const [tipoVehiculo, setTipoVehiculo] = useState(null);
+  const [añoVehiculo, setAñoVehiculo] = useState(null);
+  const [colorVehiculo, setColorVehiculo] = useState(window.localStorage.getItem('color'));
+  const [placaVehiculo, setPlacaVehiculo] = useState(null);
+
+  
+  const onChangeTipoVehiculo = (tipoVehiculo) => {
+    setTipoVehiculo(tipoVehiculo)
+    console.log(tipoVehiculo);
+  }
+  
+  const onChangeAñoVehiculo = (añoVehiculo) => {
+    setAñoVehiculo(añoVehiculo)
+    console.log(añoVehiculo);
+  }
+
+  const onChangeColorVehiculo = (e) => {
+    const value = e.target.value;
+    console.log(value);
+    setColorVehiculo(value);
+    info.verColor(colorVehiculo) 
+  };
+  
+  const onChangePlacaVehiculo = (e) => {
+    const value = e.target.value;
+    console.log(value);
+    setPlacaVehiculo(value);
+  };
+
+ 
+  const history = useHistory()
 
   const formSuccess = (datos) => {
     console.log("Formulario enviado exitosamente", datos);
+    history.push({pathname:"/resumen"})
   };
 
   const formFailed = (error) => {
@@ -29,6 +71,8 @@ const Formulario = () => {
     labelCol: {
       xs: {
         span: 12,
+
+        
       },
       sm: {
         span: 8,
@@ -44,38 +88,74 @@ const Formulario = () => {
     },
   };
 
+
+  const info = useInfo()
+
+  info.color = colorVehiculo
+  info.placa = placaVehiculo
+  info.tipo = tipoVehiculo
+  info.year = añoVehiculo
+  
+  info.verColor(colorVehiculo)  // modificar el context user
+  info.verPlaca(placaVehiculo)
+  info.verTipo(tipoVehiculo)
+  info.verYear(añoVehiculo)
+
+  
+  //console.log('desde formulario color ' + info.color + 'desde formulario placa '+ info.placa);
+ 
+ 
+//   const handleSubmit = (event) => {
+//  event.preventDefault()
+//  irResumen()
+
+//   };
+ 
     return (
         <div>
               <Row>
+             
         <Col xs={1} sm={2} md={6} lg={7}></Col>
-
+      
         <Col xs={22} sm={20} md={12} lg={10}>
+        {auth.user ? (
+            <>
+              Hola,
+              <Text type="success"> {auth.user}</Text>
+              <br></br>
+              <Paragraph> Por favor completa el siguiente formulario</Paragraph>
+            </>
+          ) : (
+            ""
+          )}
           <Form
+         // onSubmit={handleSubmit}
+          style={{marginTop:30}}
+          initialValues={{tipos : 'Tipo 1', año:"2021"}}
             name="formulario"
-           
             onFinish={formSuccess}
             onFinishFailed={formFailed}
             ref={formRef}
             {...formItemLayout}
           >
-            <Item
+            {/*  No es necesario el campo usuario/ redundante */}
+            {/* <Item
               label="Usuario"
-              name="usuario"
-              rules={[
-                {
-                  required: true,
-                  message: "Por favor ingresa tu usuario",
-                },
-              ]}
+              name="usuario" 
+           
             >
-              <Input />
+              <Input 
+              placeholder={nombreUsuario?nombreUsuario:'nada'} 
+              defaultValue={(nombreUsuario)}
+              />
             </Item>
-
+       */}
             <Item label="Tipo de vehículo" name="tipos">
-              <Select
-                defaultValue="Tipo 1"
-                // onChange={handleChange}
-              >
+              <Select autoFocus
+                onChange={onChangeTipoVehiculo} 
+              
+               >
+         
                 <Option value="Tipo 1">Tipo 1</Option>
                 <Option value="Tipo 2">Tipo 2</Option>
                 <Option value="Tipo 3">Tipo 3</Option>
@@ -84,8 +164,8 @@ const Formulario = () => {
 
             <Item label="Año" name="año">
               <Select
-                defaultValue="2021"
-                // onChange={handleChange}
+               onChange={onChangeAñoVehiculo}
+              
               >
                 <Option value="2021">2021</Option>
                 <Option value="2020">2020</Option>
@@ -108,12 +188,16 @@ const Formulario = () => {
                 },
               ]}
             >
-              <Input />
+              <Input placeholder="Ingresa Color del vehículo"
+    
+                onChange={onChangeColorVehiculo}
+                value={colorVehiculo}/>
             </Item>
 
             <Item
               label="Placa"
               name="placa"
+              value={placaVehiculo}
               rules={[
                 {
                   required: true,
@@ -121,13 +205,20 @@ const Formulario = () => {
                 },
               ]}
             >
-              <Input />
+              <Input placeholder="Ingresa Placa del vehículo" 
+              onChange={onChangePlacaVehiculo}/>
             </Item>
-            <Prueba1/>
-            <UploadImages/>
 
-            <Item style={{marginTop: 16, alignContent:"center"}}>
-              <Button type="primary" htmlType="submit">
+           
+
+           <Fechas/> 
+
+            <UploadImages/>
+           
+            <Item 
+          //  name="enviarFormulario"
+            style={{marginTop: 16, alignContent:"center"}}>
+              <Button type="submit" htmlType="submit" style={{background:'royalblue', color:'white'}} >
                Enviar
               </Button>
               {/* &nbsp;&nbsp;&nbsp;
