@@ -19,3 +19,12 @@ li {
     rgba(0, 212, 255, 1) 100%
   );
 }
+.styleCard {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(235, 179, 25, 0.87718837535014) 0%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}

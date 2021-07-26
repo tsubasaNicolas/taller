@@ -1,15 +1,14 @@
 
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Button, Form, Input, Row, Col, Select,Typography } from "antd";
 import "antd/dist/antd.css";
 import { createRef } from "react";
 import Fechas from "./Fechas";
 import UploadImages from "./UploadImages";
-import useInfo from "../info/useInfo";
 import { useHistory } from "react-router-dom";
 import useAuth from '../auth/useAuth'
-
-
+import useInfo from "../info/useInfo";
+import {ArrowRightOutlined} from '@ant-design/icons'
 const { Text, Paragraph } = Typography;
 
 const { Item } = Form;
@@ -20,36 +19,55 @@ const Formulario = () => {
     const formRef = createRef();
     const auth = useAuth()
     
-  const [tipoVehiculo, setTipoVehiculo] = useState(null);
-  const [añoVehiculo, setAñoVehiculo] = useState(null);
-  const [colorVehiculo, setColorVehiculo] = useState(window.localStorage.getItem('color'));
-  const [placaVehiculo, setPlacaVehiculo] = useState(null);
+  const [tipoVehiculo, setTipoVehiculo] = useState('Tipo 1');
+  const [añoVehiculo, setAñoVehiculo] = useState('2021');
+  const [colorVehiculo, setColorVehiculo] = useState(localStorage.getItem('color') || null);
+
+  
+  const [placaVehiculo, setPlacaVehiculo] = useState(localStorage.getItem('placa') || null);
+
+  const info = useInfo()
+
+
+  useEffect(() => {
+    if(placaVehiculo){  
+     setPlacaVehiculo(placaVehiculo)
+    } 
+  }, [placaVehiculo])
+
+  useEffect(() => {
+    if(tipoVehiculo){  
+     setTipoVehiculo(tipoVehiculo)
+    } 
+  }, [tipoVehiculo])
+
+  useEffect(() => {
+    if(añoVehiculo){  
+     setAñoVehiculo(añoVehiculo)
+    } 
+  }, [añoVehiculo])
+
+
+
+  useEffect(() => {
+   
+      console.log("prueba useEffect colorVehiculo " + colorVehiculo); 
+      setColorVehiculo(colorVehiculo)
+
+  }, [colorVehiculo])
+
 
   
   const onChangeTipoVehiculo = (tipoVehiculo) => {
     setTipoVehiculo(tipoVehiculo)
-    console.log(tipoVehiculo);
+    info.verTipo(tipoVehiculo)
+    
   }
-  
   const onChangeAñoVehiculo = (añoVehiculo) => {
     setAñoVehiculo(añoVehiculo)
-    console.log(añoVehiculo);
+    info.verYear(añoVehiculo)
   }
 
-  const onChangeColorVehiculo = (e) => {
-    const value = e.target.value;
-    console.log(value);
-    setColorVehiculo(value);
-    info.verColor(colorVehiculo) 
-  };
-  
-  const onChangePlacaVehiculo = (e) => {
-    const value = e.target.value;
-    console.log(value);
-    setPlacaVehiculo(value);
-  };
-
- 
   const history = useHistory()
 
   const formSuccess = (datos) => {
@@ -87,35 +105,22 @@ const Formulario = () => {
   };
 
 
-  const info = useInfo()
 
-  info.color = colorVehiculo
-  info.placa = placaVehiculo
-  info.tipo = tipoVehiculo
-  info.year = añoVehiculo
-  
-  info.verColor(colorVehiculo)  // modificar el context user
-  info.verPlaca(placaVehiculo)
-  info.verTipo(tipoVehiculo)
-  info.verYear(añoVehiculo)
 
-  
-  //console.log('desde formulario color ' + info.color + 'desde formulario placa '+ info.placa);
  
+
  
 //   const handleSubmit = (event) => {
 //  event.preventDefault()
 //  irResumen()
-
 //   };
- 
     return (
         <div>
               <Row>
              
         <Col xs={1} sm={2} md={6} lg={7}></Col>
       
-        <Col xs={22} sm={20} md={12} lg={10}>
+        <Col xs={22} sm={20} md={12} lg={10} style={{marginTop:30}}>
         {auth.user ? (
             <>
               Hola,
@@ -129,7 +134,7 @@ const Formulario = () => {
           <Form
          // onSubmit={handleSubmit}
           style={{marginTop:30}}
-          initialValues={{tipos : 'Tipo 1', año:"2021"}}
+          initialValues={{tipo : 'Tipo 1', año:"2021"}}
             name="formulario"
             onFinish={formSuccess}
             onFinishFailed={formFailed}
@@ -148,20 +153,26 @@ const Formulario = () => {
               />
             </Item>
        */}
-            <Item label="Tipo de vehículo" name="tipos">
-              <Select autoFocus
-                onChange={onChangeTipoVehiculo} 
+            <Item label="Tipo de vehículo"   
+            >
+              <Select autoFocus 
+            name="tipo" 
+              onChange={onChangeTipoVehiculo} 
+               // defaultValue={JSON.parse(localStorage.getItem("tipo"))}
+              defaultValue={JSON.parse(localStorage.getItem("tipo"))}
                >
-         
                 <Option value="Tipo 1">Tipo 1</Option>
                 <Option value="Tipo 2">Tipo 2</Option>
                 <Option value="Tipo 3">Tipo 3</Option>
               </Select>
             </Item>
-
-            <Item label="Año" name="año">
+       
+            <Item label="Año"  >
               <Select
+              name="año" 
                onChange={onChangeAñoVehiculo}
+               defaultValue={JSON.parse(localStorage.getItem("year"))}
+              
               
               >
                 <Option value="2021">2021</Option>
@@ -175,26 +186,11 @@ const Formulario = () => {
               </Select>
             </Item>
 
+               
             <Item
               label="Color"
-              name="color"
-              rules={[
-                {
-                  required: true,
-                  message: "Por favor ingresa el color del vehículo",
-                },
-              ]}
-            >
-              <Input placeholder="Ingresa Color del vehículo"
-    
-                onChange={onChangeColorVehiculo}
-                value={colorVehiculo}/>
-            </Item>
-
-            <Item
-              label="Placa"
-              name="placa"
-              value={placaVehiculo}
+            
+              value={JSON.stringify(colorVehiculo) === null ? localStorage.getItem('color'):colorVehiculo} 
               rules={[
                 {
                   required: true,
@@ -202,11 +198,37 @@ const Formulario = () => {
                 },
               ]}
             >
-              <Input placeholder="Ingresa Placa del vehículo" 
-              onChange={onChangePlacaVehiculo}/>
-            </Item>
+              <Input placeholder="Ingresa Color del vehículo"
+       required
+               name='color'
+              defaultValue={JSON.parse(localStorage.getItem("color"))}
+              onChange={(e)=>{
+                setColorVehiculo(colorVehiculo)
+                info.verColor(e.target.value)
+              }} 
+                />
+                        </Item>
 
-           
+            <Item
+              label="Placa"            
+              rules={[
+                {
+                  required: true,
+                  message: "Por favor ingresa la placa del vehículo",
+                },
+              ]}
+            >
+              <Input 
+              name='inputPlacaVehiculo'
+              required
+              placeholder="Ingresa Placa del vehículo" 
+              defaultValue={JSON.parse(localStorage.getItem("placa"))} 
+              onChange={(e)=>{
+                setPlacaVehiculo(placaVehiculo)
+                info.verPlaca(e.target.value)
+              }} 
+              />
+            </Item>
 
            <Fechas/> 
 
@@ -215,7 +237,9 @@ const Formulario = () => {
             <Item 
           //  name="enviarFormulario"
             style={{marginTop: 16, alignContent:"center"}}>
-              <Button type="submit" htmlType="submit" style={{background:'royalblue', color:'white'}} >
+              <Button type="submit" htmlType="submit" 
+              icon={<ArrowRightOutlined />}
+              style={{background:'royalblue', color:'white'}} >
                Enviar
               </Button>
               {/* &nbsp;&nbsp;&nbsp;

@@ -66,6 +66,7 @@ auth.login(user)  // modificar el context user
     }); 
     setTimeout(() => {
       modal.destroy();
+      
     }, 4000); // Duración modal info: tienes 15 minutos para enviar el formulario
   }
 
@@ -76,7 +77,7 @@ auth.login(user)  // modificar el context user
         <Col xs={2} sm={6} md={8}></Col>
 
         <Col xs={20} sm={12} md={8}>
-         <Title style={{color:"goldenrod"}} level={2}> Login </Title> 
+         <Title style={{color:"goldenrod"}} level={2}> Bienvenid@ </Title> 
          <Divider/>
           <Form
             name="login"

@@ -9,23 +9,22 @@ import PublicRoute from "../components/PublicRoute";
 import { Button, Card } from "antd";
 import Resumen from "../components/Resumen";
 import Final from "../components/Final";
+import { LogoutOutlined } from "@ant-design/icons";
+import "../App.css";
 
 const AppRouter = () => {
   const auth = useAuth();
   return (
     <Router>
       <Card
-        style={{
-          marginTop: 2,
-          backgroundColor: "goldenrod",
-          color: "lightseagreen",
-        }}
+        bodyStyle={{ background: "#ffd452" /* fallback for old browsers */ }}
         type="inner"
         title="Seguro Automotriz"
         extra={
           auth.isLogged() && (
             <Button
-              style={{ background: "lightseagreen", color: "white" }}
+              style={{ background: "crimson", color: "white" }}
+              icon={<LogoutOutlined />}
               onClick={auth.logout}
             >
               Salir

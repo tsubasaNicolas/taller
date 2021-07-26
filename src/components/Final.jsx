@@ -3,9 +3,9 @@ import FilePdf from '../components/FilePdf'
 
 const Final = () => {
     return (
-        <div>
+        <div style={{marginTop:50}}>
             Final, ya puedes descargar tu comprobante de solicitud
-            <FilePdf />
+            <FilePdf/>
             
         </div>
     )
