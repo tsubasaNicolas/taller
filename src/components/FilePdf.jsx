@@ -30,7 +30,7 @@ const FilePdf = () => {
   //const imagen1 = fileList[0];
   ///problemas al cargar las fotos  -- verificar cuando cargan
   //pospongo la renderización de la imagen  sólo informaré del nombre de la imagen  en el comprobante
-  console.log("desde FilePdf " + localStorage.getItem("fileList").name);
+  // console.log("desde FilePdf " + localStorage.getItem("fileList").name);
 
   const imagen1 = imagenes[0].name;
   const imagen2 = imagenes[1].name;
