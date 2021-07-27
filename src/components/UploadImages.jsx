@@ -9,7 +9,9 @@ const { Item } = Form;
 const UploadImages = () => {
   const info = useInfo();
 
-  const [fileList, setFileList] = useState([]);
+  const [fileList, setFileList] = useState(
+    JSON.parse(localStorage.getItem("fileList")) || []
+  );
 
   useEffect(() => {
     if (fileList) {
@@ -42,16 +44,18 @@ const UploadImages = () => {
     let fileList = [...infoFotos.fileList];
     // the original file is located at the `originFileObj` key of each of this files
     // so `event.target.files[0]` is actually fileList[0].originFileObj
+    //info.verFileList(fileList);
     console.log(infoFotos.file.status);
+
     if (infoFotos.file.status === "done") {
-      console.log(fileList.tumbUrl);
+      console.log(fileList.thumbUrl);
       setFileList(fileList);
       console.log(info.fileList);
     }
 
     if (fileList.length > 0) {
       Array.from(fileList).forEach((file) => {
-        console.log(file.name);
+        console.log("prueba desde upload images " + file.name);
       });
       // console.log(fileList.thumbUrl);
     }
@@ -84,22 +88,54 @@ const UploadImages = () => {
     }
   };
 
+  // const fileListKeep = [
+  //   {
+  //     uid: '-1',
+  //     name: 'xxx.png',
+  //     status: 'done',
+  //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  //     thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  //   },
+  //   {
+  //     uid: '-2',
+  //     name: 'yyy.png',
+  //     status: 'error',
+  //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  //   },
+  // ];
+
+  const cantidadFotos = (rule, value, callback) => {
+    const lista = info.fileList;
+
+    if (lista.length < 4) {
+      callback("Todas las fotografías requeridas");
+    }
+    callback();
+    // Always return a callback, otherwise validateFields cannot respond
+  };
+
   return (
     <>
       <div style={{ marginTop: 20 }}>
         (Derecha, Izquierda, Delantera, Trasera)
       </div>
       <Space direction="vertical" align="center" size="large">
-        <Item name="imagenes" style={{ marginTop: 10 }}>
+        <Item
+          name="imagenes"
+          style={{ marginTop: 10 }}
+          rules={[{ validator: cantidadFotos }]}
+        >
           <Upload
             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            // handleChange={handleChange}
-            // fileList={fileList}
+            showUploadList={true}
+            // showUploadList: false,
+            //Whether to display the list after successful file upload
             onChange={handleUpload}
             listType="picture"
             maxCount={4}
             multiple
             beforeUpload={beforeUpload}
+            defaultFileList={fileList}
           >
             <Button icon={<UploadOutlined />} style={{ marginBottom: 16 }}>
               Subir (4 Fotos)
@@ -109,14 +145,18 @@ const UploadImages = () => {
       </Space>
 
       <div>
-        {cantidadImagenes < 4
-          ? `Faltan ${4 - cantidadImagenes} fotos por cargar`
-          : "Todas las fotos han sido cargadas"}
+        {cantidadImagenes < 4 ? (
+          <Text type="danger">
+            Faltan {4 - cantidadImagenes} fotos por cargar
+          </Text>
+        ) : (
+          <Text type="success">* Todas las fotos han sido cargadas * </Text>
+        )}
       </div>
 
-      <Text type="danger">
-        ( Pendiente de programar - es posible avanzar sin subir fotos y/o con
-        fotos cargadas con error luego de alguna válida)
+      <Text type="success">
+        ( Pendiente de programar -funciona con fotos cargadas con error luego de
+        una cargada con éxito)
       </Text>
     </>
   );
