@@ -32,18 +32,18 @@ const FilePdf = () => {
   //pospongo la renderización de la imagen  sólo informaré del nombre de la imagen  en el comprobante
   // console.log("desde FilePdf " + localStorage.getItem("fileList").name);
 
-  const imagen1 = imagenes[0].name;
-  const imagen2 = imagenes[1].name;
-  const imagen3 = imagenes[2].name;
-  const imagen4 = imagenes[3].name;
-
   const jsPdfGenerator = () => {
     if (imagenes.length > 0) {
       Array.from(imagenes).forEach((file) => {
-        console.log("array desde file pdf " + file.name);
+        //  console.log("array desde file pdf " + file.name);
       });
       // console.log(fileList.thumbUrl);
     }
+
+    const imagen1 = imagenes.length > 0 ? imagenes[0].name : "foto pendiente";
+    const imagen2 = imagenes.length > 1 ? imagenes[1].name : "foto pendiente";
+    const imagen3 = imagenes.length > 2 ? imagenes[2].name : "foto pendiente";
+    const imagen4 = imagenes.length > 3 ? imagenes[3].name : "foto pendiente";
 
     const doc = new jsPDF();
     // pinto los datos  desde el contexto

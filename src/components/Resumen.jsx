@@ -42,7 +42,7 @@ const Resumen = () => {
         <Paragraph>{`Retiro del vehículo: ${retiro}`}</Paragraph>
         {/* JSX recorro la lista de imagenes */}
         <Text type="success" style={{ marginTop: 20 }}>
-          Imágenes cargadas
+          {!info.fileList === [] ? "Imágenes cargadas :" : ""}
         </Text>
         {info.fileList
           ? info.fileList.map((list, index) => (

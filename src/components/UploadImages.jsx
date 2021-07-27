@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Upload, Button, Space, message, Form } from "antd";
+import { Upload, Button, Space, message, Form, Typography } from "antd";
 import "antd/dist/antd.css";
 import { UploadOutlined } from "@ant-design/icons";
 import useInfo from "../info/useInfo";
+const { Text } = Typography;
 
 const { Item } = Form;
 const UploadImages = () => {
@@ -112,6 +113,11 @@ const UploadImages = () => {
           ? `Faltan ${4 - cantidadImagenes} fotos por cargar`
           : "Todas las fotos han sido cargadas"}
       </div>
+
+      <Text type="danger">
+        ( Pendiente de programar - es posible avanzar sin subir fotos y/o con
+        fotos cargadas con error luego de alguna válida)
+      </Text>
     </>
   );
 };
