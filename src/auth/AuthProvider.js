@@ -24,6 +24,12 @@ const AuthProvider = ({ children }) => {
     logout() {
       setUser(null);
       localStorage.removeItem("user");
+      localStorage.removeItem("placa");
+      localStorage.removeItem("tipo");
+      localStorage.removeItem("ingreso");
+      localStorage.removeItem("retiro");
+      localStorage.removeItem("fileList");
+      localStorage.removeItem("year");
     },
     isLogged() {
       return !!user;

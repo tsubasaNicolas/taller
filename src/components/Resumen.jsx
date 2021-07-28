@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 //import useInfo from "../info/useInfo";
 import useAuth from "../auth/useAuth";
-import { Typography, Button } from "antd";
+import { Typography, Button, Modal, Space } from "antd";
 import { useHistory } from "react-router-dom";
 import "../App.css";
+import { Link } from "react-router-dom";
 import { CheckOutlined } from "@ant-design/icons";
 import useInfo from "../info/useInfo";
+import FilePdf from "./FilePdf";
 
 const { Text, Paragraph } = Typography;
 const Resumen = () => {
+  const [confirm, setConfirm] = useState(false);
+
+  const abrirConfirm = () => {
+    setConfirm(true);
+  };
+
+  const cerrarConfirm = () => {
+    setConfirm(false);
+  };
   //obtengo los datos del contexto
   const info = useInfo();
   const auth = useAuth();
@@ -57,11 +68,29 @@ const Resumen = () => {
           style={{ background: "lightseagreen", color: "white" }}
           icon={<CheckOutlined />}
           onClick={() => {
-            history.push({ pathname: "/final" });
+            abrirConfirm();
           }}
         >
           Confirmar datos ingresados
         </Button>
+        <div style={{ marginTop: 10 }}>
+          <Space direction="vertical" align="center">
+            <Link to="/formulario"> Volver </Link>
+          </Space>
+        </div>
+        <Modal
+          title="Confirmar Datos"
+          visible={confirm}
+          onCancel={cerrarConfirm}
+          onOk={() => {
+            history.push({ pathname: "/final" });
+            <FilePdf />;
+          }}
+        >
+          ¿ Estás seguro que deseas confirmar los datos? ... una vez confirmado,
+          no podrá volver a modificarlos. trabajaré esto luego como pila o con
+          Estado
+        </Modal>
       </>
     </div>
   );

@@ -1,10 +1,17 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
 import useAuth from "../auth/useAuth";
 import Formulario from "../components/Formulario";
 import Home from "../components/Home";
 import Login from "../components/Login";
 import NotFoundPage from "../components/NotFoundPage";
 import PrivateRoute from "../components/PrivateRoute";
+//import EspecialRoute from "../components/EspecialRoute";
 import PublicRoute from "../components/PublicRoute";
 import { Button, Card } from "antd";
 import Resumen from "../components/Resumen";
@@ -25,7 +32,10 @@ const AppRouter = () => {
             <Button
               style={{ background: "crimson", color: "white" }}
               icon={<LogoutOutlined />}
-              onClick={auth.logout}
+              onClick={() => {
+                auth.logout();
+                <Redirect to="/login" />;
+              }}
             >
               Salir
             </Button>
